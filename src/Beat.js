@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Note from './Note.js';
 
 const Beat = ({ beat, addBeats, canAdd, beatsNum }) => {
-  console.log(beat);
   let noteDisplays = identifyNoteDisplays(beat?.type, beat?.beatCount);
   let noteList = createNoteList(beat?.type, noteDisplays);
   const [notes, updateNotes] = useState(noteList);
