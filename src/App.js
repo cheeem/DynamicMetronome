@@ -5,14 +5,26 @@ import Bar from './Bar.js';
 
 const App = () => {
   //create starting beats
-  let startBeats = [];
+  const startBeats = [];
   for(let i = 0; i < 4; i++) {
     startBeats.push({
-      beatCount: i+1,
       playBeat: false,
       type: 1,
     })
   }
+  //create menu dropdown options
+  const beatTypeOptions = [
+    {value: 1, label: "Quarter Note"},
+    {value: 2, label: "Eighth Note"},
+    {value: 3, label: "Triplelet"},
+    {value: 4, label: "Sixteenth Note"}
+  ]
+  const soundOptions = [
+    {value: "p1", label: "sound1"},
+    {value: "", label: "sound2"},
+    {value: "p2", label: "sound3"},
+    {value: "p3", label: "sound4"}
+  ]
 
   //define beat state
   const [beats, setBeats] = useState(startBeats);
@@ -25,33 +37,25 @@ const App = () => {
   //define index state
   let [i, setIndex] = useState(0);
   //define menu styles state
-  let [menuStyle, setMenuStyle] = useState({
-    display: "none",
-    top: 0,
-    left: 0,
-  });
+  let [menuStyle, setMenuStyle] = useState({display: "none", top: 0, left: 0});
   //define current selected beat state
-  const [selectedBeat, setSelectedBeat] = useState(0);
+  const [selected, setSelected] = useState({});
 
   //add a beat to the bar
   const addBeatToBar = () => {
-    let lastCount = beats[beats.length-1]?.beatCount || 0;
-    if(lastCount === 16) return;
+    if(beats.length === 16) return;
     let newBeat = {
-      beatCount: lastCount+1,
       playBeat: false,
       type: 1,
     }
-    setBeats(currentBeats => {
-      return [...currentBeats, newBeat]
-    });
+    setBeats(currentBeats => [...currentBeats, newBeat]);
   }
 
   useInterval(() => {
-    if(i === beats.length+1) i = 1;
-    setBeats(beats.map(beat => {
+    if(i === beats.length) i = 0;
+    setBeats(beats.map((beat, index) => {
       beat = {...beat, playBeat: false};
-      if (beat.beatCount === i) return {...beat, playBeat: true};
+      if (index === i) return {...beat, playBeat: true};
       return beat;
     }));
     setIndex(i+1);
@@ -77,13 +81,13 @@ const App = () => {
       return beat;
     }));
     //revert index back to 1
-    if(isOn) setIndex(1);
+    if(isOn) setIndex(0);
   }
 
-  const displayMenu = (event, beatCount) => {
+  const displayMenu = (event, selectedData) => {
     //determine display type
     let display = 'block';
-    if(selectedBeat === beatCount) menuStyle.display === "block" ? display = "none" : display = "block";
+    if(selected.beatCount === selectedData.beatCount) menuStyle.display === "block" ? display = "none" : display = "block";
     //display and position menu
     setMenuStyle({
       top: `${event.clientY}px`,
@@ -91,19 +95,12 @@ const App = () => {
       display: display,
     });
     //set selected beat
-    setSelectedBeat(beatCount);
+    setSelected(selectedData);
   }
 
   const deleteBeat = () => {
     //delete beat
-    setBeats(beats.filter(beat => beat.beatCount !== selectedBeat));
-    //reset beatCounts
-    /*
-    setBeats(beats.map(beat => {
-      beat = {...beat, beatCount: i+1};
-      return beat;
-    }));
-    */
+    setBeats(beats.filter((beat, index) => index !== selected.beatCount));
     //hide menu
     setMenuStyle({
       ...menuStyle,
@@ -112,11 +109,18 @@ const App = () => {
   }
 
   const changeBeatType = (event) => {
+    //get selected dropdown option (number)
     let input = Number(event.target.value);
-    setBeats(beats.map(beat => {
-      if (beat.beatCount === selectedBeat) return {...beat, type: input};
+    //update selected type
+    setSelected({...selected, type: input});
+    //update beat type (not working??)
+    setBeats(beats.map((beat, index) => {
+      //if (index === selected.beatCount) console.log({...beat, type: input});
+      if (index === selected.beatCount) beat = {...beat, type: input};
+      console.log(beat);
       return beat;
     }));
+    console.log(beats);
   }
   
   return (
@@ -125,7 +129,6 @@ const App = () => {
         beats={beats}
         displayMenu={displayMenu}
         addBeatToBar={addBeatToBar}
-        beatInterval={beatInterval}
       />
       <div className="menu" style={menuStyle}>
         <div className="delete-beat"> 
@@ -134,20 +137,18 @@ const App = () => {
         </div>
         <label> Choose Note Type </label>
         <br></br>
-        <select id="beat-type" onChange={changeBeatType}>
-          <option value="1"> Quarter Note </option>
-          <option value="2"> Eighth Notes </option>
-          <option value="3"> Triplelets </option>
-          <option value="4"> Sixteenth Notes </option>
+        <select className="beat-type" onChange={changeBeatType} value={selected.type}>
+          {beatTypeOptions.map((option, index) => (
+            <option key={index} value={option.value}>{option.label}</option>
+          ))}
         </select>
         <br></br>
         <label> Choose Note Sound </label>
         <br></br>
-        <select id="sound" onChange={null}>
-          <option value=""> sound1 </option>
-          <option value=""> sound2 </option>
-          <option value=""> sound3 </option>
-          <option value=""> sound4 </option>
+        <select className="sound" onChange={null} /*value={selected.type.toString()}*/>
+          {soundOptions.map((option, index) => (
+            <option key={index} value={option.value}>{option.label}</option>
+          ))}
         </select>
       </div>
       <button className="btn" onClick={toggleMetronome}>
@@ -172,12 +173,10 @@ const App = () => {
 
 const useInterval = (callback, delay) => {
   const savedCallback = useRef();
-
   // Remember the latest function.
   useEffect(() => {
     savedCallback.current = callback;
   }, [callback]);
-
   // Set up the interval.
   useEffect(() => {
     function tick() {

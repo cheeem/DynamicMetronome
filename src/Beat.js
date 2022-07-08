@@ -1,19 +1,22 @@
 import React, { useState } from 'react';
 import Note from './Note.js';
 
-const Beat = ({ beat, beatCount, displayMenu, }) => {
-  let noteDisplays = identifyNoteDisplays(beat.type, beatCount);
+const Beat = ({ beat, displayMenu, }) => {
+  let noteDisplays = identifyNoteDisplays(beat.type, beat.beatCount);
   let noteList = createNoteList(beat.type, noteDisplays);
-  const [notes, updateNotes] = useState(noteList);
+  const [notes, setNotes] = useState(noteList);
   return (
     <>
-      <div className='beat' onClick={(event) => displayMenu(event, beatCount)}>
+      <div className='beat'>
         {notes.map(note => {
           return <Note
             key={note.noteCount}
-            playBeat={beat.playBeat}
             noteDisplay={note.noteDisplay}
-            beatCount={beatCount} />
+            beatCount={beat.beatCount}
+            type={beat.type}
+            playBeat={beat.playBeat}
+            displayMenu={displayMenu}
+            />
         })}
       </div>
     </>
@@ -24,11 +27,11 @@ const createNoteList = (type, noteDisplays) => {
   let noteList = [];
   for(let i = 0; i < type; i++) {
     noteList.push({
-      noteCount: i+1,
+      noteCount: i,
       noteDisplay: noteDisplays[i],
       time: 0,
       playNote: false,
-      sound: '',
+      sound: './sounds/mn1.wav',
     });
   }
   return noteList;
