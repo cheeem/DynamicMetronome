@@ -1,20 +1,19 @@
 import React, { useState } from 'react';
 import Note from './Note.js';
 
-const Beat = ({ beat, addBeats, canAdd, beatsNum }) => {
-  let noteDisplays = identifyNoteDisplays(beat?.type, beat?.beatCount);
-  let noteList = createNoteList(beat?.type, noteDisplays);
+const Beat = ({ beat, beatCount, displayMenu, }) => {
+  let noteDisplays = identifyNoteDisplays(beat.type, beatCount);
+  let noteList = createNoteList(beat.type, noteDisplays);
   const [notes, updateNotes] = useState(noteList);
   return (
     <>
-      <div className='beat' onClick={addBeats} style={{display: beatsNum === 16 ? "none" : "flex"}}>
+      <div className='beat' onClick={(event) => displayMenu(event, beatCount)}>
         {notes.map(note => {
           return <Note
-            canAdd={canAdd}
             key={note.noteCount}
-            playBeat={beat?.playBeat}
+            playBeat={beat.playBeat}
             noteDisplay={note.noteDisplay}
-            beatCount={beat?.beatCount} />
+            beatCount={beatCount} />
         })}
       </div>
     </>
