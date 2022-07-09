@@ -1,18 +1,21 @@
 import React from 'react';
+import useSound from 'use-sound';
 
 const Note = ({ note, beatCount, type, displayMenu }) => {
-  //if(note.playNote === beatCount) console.log(note.playNote);
-  //if(note.playNote) console.log(note.playNote);
-  let className = 'note';
-  let audio = new Audio(note.sound);
-  if(note.noteDisplay === beatCount) className += ' first'
-  if(note.noteDisplay === beatCount) note.noteDisplay++;
-  //if(note.playNote !== false) audio.play();
+  //manage sound
+  let [playSound] = useSound(note.sound);
+  if(note.playNote !== false) playSound();
+  //manage styles
   let styles = {backgroundColor: note.playNote !== false ? "green" : "gray"}
-
+  //manage classes
+  let className = 'note';
+  if(note.noteDisplay === beatCount) className += ' first';
+  //manage display
+  let display = note.noteDisplay;
+  if(note.noteDisplay === beatCount) display = note.noteDisplay+1;
   return (
     <div className={className} style={styles} onClick={(event) => displayMenu(event, {beatCount, noteDisplay: note.noteDisplay, type})}>
-      <p> {note.noteDisplay} </p>
+      <p> {display} </p>
     </div>
   )
 }
