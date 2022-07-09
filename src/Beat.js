@@ -3,11 +3,11 @@ import Note from './Note.js';
 
 const Beat = ({ beat, displayMenu, }) => {
   const noteDisplays = identifyNoteDisplays(beat.type, beat.beatCount);
-  const noteList = createNoteList(beat.type, noteDisplays, beat.playNote);
+  const notes = createNotes(beat.type, noteDisplays, beat.playNote);
   return (
     <>
       <div className='beat'>
-        {noteList.map(note => {
+        {notes.map(note => {
           return <Note
             key={note.noteCount}
             note={note}
@@ -21,18 +21,17 @@ const Beat = ({ beat, displayMenu, }) => {
   )
 }
 
-const createNoteList = (type, noteDisplays, playNote) => {
-  const noteList = [];
+const createNotes = (type, noteDisplays, playNote) => {
+  const notes = [];
   for(let i = 0; i < type; i++) {
-    noteList.push({
+    notes.push({
       noteCount: i,
       noteDisplay: noteDisplays[i],
-      playNote: false,
+      playNote: playNote === i ? playNote : false,
       sound: './sounds/mn1.wav',
     });
-    if(playNote === i) noteList[i].playNote = playNote;
   }
-  return noteList;
+  return notes;
 }
 
 const identifyNoteDisplays = (type, beatCount) => {
