@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Note from './Note.js';
-import mn1 from './sounds/mn1.mp3';
 
 const Beat = ({ beat, displayMenu, }) => {
   const noteDisplays = identifyNoteDisplays(beat.type, beat.beatCount);
@@ -29,7 +28,6 @@ const createNotes = (type, noteDisplays, playNote) => {
       noteCount: i,
       noteDisplay: noteDisplays[i],
       playNote: playNote === i ? playNote : false,
-      sound: mn1,
     });
   }
   return notes;

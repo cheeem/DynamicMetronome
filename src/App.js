@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 import Bar from './Bar.js';
+import mn1 from './sounds/mn1.mp3';
+import mn2 from './sounds/mn2.mp3';
 
 const App = () => {
   //create starting beats
@@ -8,7 +10,7 @@ const App = () => {
   for(let i = 0; i < 4; i++) {
     startBeats.push({
       playNote: false,
-      type: 3,
+      type: 1,
     })
   }
   //create menu dropdown options
@@ -19,10 +21,9 @@ const App = () => {
     {value: 4, label: "Sixteenth Note"}
   ]
   const soundOptions = [
-    {value: "p1", label: "sound1"},
-    {value: "", label: "sound2"},
-    {value: "p2", label: "sound3"},
-    {value: "p3", label: "sound4"}
+    {value: mn1, label: "Metrnome 1"},
+    {value: mn2, label: "Metronome 2"},
+
   ]
 
   //define beat state
@@ -90,7 +91,8 @@ const App = () => {
   const displayMenu = (event, selectedData) => {
     //determine display type
     let display = 'block';
-    if(selected.beatCount === selectedData.beatCount) menuStyle.display === "block" ? display = "none" : display = "block";
+    if(selected.noteCount === selectedData.noteCount)
+      menuStyle.display === "block" ? display = "none" : display = "block";
     //display and position menu
     setMenuStyle({
       top: `${event.clientY}px`,
@@ -116,11 +118,22 @@ const App = () => {
     let input = Number(event.target.value);
     //update selected type
     setSelected({...selected, type: input});
-    //update beat type (not working??)
+    //update beat type
     setBeats(beats.map((beat, index) => {
       if (index === selected.beatCount) beat = {...beat, type: input};
       return beat;
     }));
+  }
+
+  const changeSoundType = (event) => {
+    //get selected dropdown option (number)
+    let input = event.target.value;
+    //define function to set state
+    let setSound = selected.setSound;
+    //update selected sound
+    setSelected({...selected, sound: input});
+    //update sound state
+    setSound(input);
   }
   
   return (
@@ -145,7 +158,7 @@ const App = () => {
         <br></br>
         <label> Choose Note Sound </label>
         <br></br>
-        <select className="sound" onChange={null} /*value={selected.type.toString()}*/>
+        <select className="sound" onChange={changeSoundType} value={selected.sound}>
           {soundOptions.map((option, index) => (
             <option key={index} value={option.value}>{option.label}</option>
           ))}
