@@ -21,7 +21,7 @@ const App = () => {
     {value: 4, label: "Sixteenth Note"}
   ]
   const soundOptions = [
-    {value: mn1, label: "Metrnome 1"},
+    {value: mn1, label: "Metronome 1"},
     {value: mn2, label: "Metronome 2"},
 
   ]
@@ -79,13 +79,13 @@ const App = () => {
   }
 
   const toggleMetronome = () => {
+    //revert index back to 1
+    setBeatIndex(0);
+    setNoteIndex(0);
     //turn off the metronome
     setIsOn(isOn !== true);
     //disable played beat
     setBeats(beats.map(beat => {return {...beat, playNote: false}}));
-    //revert index back to 1
-    if(isOn) setBeatIndex(0);
-    if(isOn) setNoteIndex(0);
   }
 
   const displayMenu = (event, selectedData) => {
@@ -104,8 +104,15 @@ const App = () => {
   }
 
   const deleteBeat = () => {
+    //turn off metronome if running and if all beats will be deleted
+    if(isOn && beats.length-1 === 0) toggleMetronome();
     //delete beat
     setBeats(beats.filter((beat, index) => index !== selected.beatCount));
+    //set beat index
+    if(beatIndex) beatIndex--;
+    setBeatIndex(beatIndex);
+    //reset note index 
+    if(selected.playBeat) setNoteIndex(0);
     //hide menu
     setMenuStyle({
       ...menuStyle,
@@ -174,7 +181,6 @@ const App = () => {
         <input
           type="text"
           id="tempo"
-          max="200"
           value={tempo}
           onChange={changeTempo}
         >

@@ -13,6 +13,7 @@ const Beat = ({ beat, displayMenu, }) => {
             note={note}
             beatCount={beat.beatCount}
             type={beat.type}
+            playBeat={beat.playNote !== false}
             displayMenu={displayMenu}
             />
         })}
