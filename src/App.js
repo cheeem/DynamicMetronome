@@ -1,4 +1,3 @@
-//import './App.css';
 import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 import Bar from './Bar.js';
@@ -8,8 +7,8 @@ const App = () => {
   const startBeats = [];
   for(let i = 0; i < 4; i++) {
     startBeats.push({
-      playBeat: false,
-      type: 1,
+      playNote: false,
+      type: i+1,
     })
   }
   //create menu dropdown options
@@ -29,7 +28,7 @@ const App = () => {
   //define beat state
   const [beats, setBeats] = useState(startBeats);
   //define tempo state
-  let [tempo, setTempo] = useState(120);
+  let [tempo, setTempo] = useState(60);
   //define beat interval state
   let [beatInterval, setBeatInterval] = useState(1/(tempo/60));
   //define running status state
@@ -40,26 +39,52 @@ const App = () => {
   let [menuStyle, setMenuStyle] = useState({display: "none", top: 0, left: 0});
   //define current selected beat state
   const [selected, setSelected] = useState({});
-
   //add a beat to the bar
   const addBeatToBar = () => {
     if(beats.length === 16) return;
-    let newBeat = {
-      playBeat: false,
-      type: 1,
-    }
+    let newBeat = {playNote: false, type: 1,}
     setBeats(currentBeats => [...currentBeats, newBeat]);
   }
 
+  /*
   useInterval(() => {
     if(i === beats.length) i = 0;
-    setBeats(beats.map((beat, index) => {
-      beat = {...beat, playBeat: false};
-      if (index === i) return {...beat, playBeat: true};
-      return beat;
-    }));
+    setBeats(beats.map((beat) => {return {...beat, playNote: false}}));
+    beats.forEach(beatData => {
+      for(let note = 0; note < beatData.type; note++) {
+        setBeats(beats.map((beat, index) => {
+          if (index === i) beat = {...beat, playNote: note};
+          return beat;
+        }));
+        wait((beatInterval/beatData.type)*1000);
+      }
+    });
     setIndex(i+1);
   }, isOn ? beatInterval*1000 : null);
+  */
+
+  useInterval(() => {
+    if(i === beats.length) i = 0;
+    setBeats(beats.map((beat) => {return {...beat, playNote: false}}));
+    beats.forEach(beatData => {
+      for(let note = 0; note < beatData.type; note++) {
+        //setTimeout for beatInterval / type
+        setTimeout(() => {
+          setBeats(beats.map((beat, index) => {
+            if (index === i) beat = {...beat, playNote: note};
+            return beat;
+          }));
+        }, (beatInterval/beatData.type)*1000);
+      }
+    });
+    setIndex(i+1);
+  }, isOn ? beatInterval*1000 : null);
+
+  function wait(seconds) {
+    return new Promise(resolve => {
+       setTimeout(resolve, seconds * 1000);
+    });
+  } 
 
   const changeTempo = (e) => {
     tempo = Number(e.target.value);
@@ -72,12 +97,12 @@ const App = () => {
     if(tempo) setBeatInterval(1/(tempo/60))
   }
 
-  const toggleMetronome = (e) => {
+  const toggleMetronome = () => {
     //turn off the metronome
     setIsOn(isOn !== true);
     //disable played beat
     setBeats(beats.map(beat => {
-      beat = {...beat, playBeat: false};
+      beat = {...beat, playNote: false};
       return beat;
     }));
     //revert index back to 1
@@ -115,12 +140,9 @@ const App = () => {
     setSelected({...selected, type: input});
     //update beat type (not working??)
     setBeats(beats.map((beat, index) => {
-      //if (index === selected.beatCount) console.log({...beat, type: input});
       if (index === selected.beatCount) beat = {...beat, type: input};
-      console.log(beat);
       return beat;
     }));
-    console.log(beats);
   }
   
   return (
@@ -188,6 +210,5 @@ const useInterval = (callback, delay) => {
     }
   }, [delay]);
 }
-
 
 export default App;

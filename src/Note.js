@@ -1,13 +1,15 @@
 import React from 'react';
 
-const Note = ({ playBeat, noteDisplay, beatCount, type, displayMenu }) => {
+const Note = ({ note, beatCount, type, displayMenu }) => {
+  if(note.playNote) console.log(note.playNote);
   let className = 'note';
-  if(noteDisplay === beatCount) className += ' first'
-  if(noteDisplay === beatCount) noteDisplay++;
-  let styles = {backgroundColor: playBeat ? "green" : "gray"}
+  if(note.noteDisplay === beatCount) className += ' first'
+  if(note.noteDisplay === beatCount) note.noteDisplay++;
+  let styles = {backgroundColor: note.playNote ? "green" : "gray"}
+
   return (
-    <div className={className} style={styles} onClick={(event) => displayMenu(event, {beatCount, noteDisplay, type})}>
-      <p> {noteDisplay} </p>
+    <div className={className} style={styles} onClick={(event) => displayMenu(event, {beatCount, noteDisplay: note.noteDisplay, type})}>
+      <p> {note.noteDisplay} </p>
     </div>
   )
 }

@@ -2,6 +2,7 @@
     margin: 0px;
     padding: 0px;
     box-sizing: border-box;
+    font-family: sans-serif;
 }
 
 .btn {
@@ -51,7 +52,6 @@
 
     text-align: center;
     font-size: 14px;
-    font-family: sans-serif;
 }
 
 .note.first {
