@@ -29,7 +29,7 @@ const App = () => {
   //define beat state
   const [beats, setBeats] = useState(startBeats);
   //define tempo state
-  let [tempo, setTempo] = useState(60);
+  let [tempo, setTempo] = useState(120);
   //define beat interval state
   let [beatInterval, setBeatInterval] = useState(1/(tempo/60));
   //define running status state
@@ -144,49 +144,61 @@ const App = () => {
   }
   
   return (
-    <> 
+    <div className="app-container"> 
       <Bar 
         beats={beats}
         displayMenu={displayMenu}
         addBeatToBar={addBeatToBar}
       />
       <div className="menu" style={menuStyle}>
-        <div className="delete-beat"> 
-          <label className="delete-label" onClick={deleteBeat}> Delete Beat </label>
+        <div className="menu-header"> Options </div>
+        <div className="menu-item delete-beat"> 
+          <label className="delete-label" onClick={deleteBeat}> ❌ Delete Beat </label>
           <div className="delte-icon" src=""> </div>
         </div>
-        <label> Choose Note Type </label>
-        <br></br>
-        <select className="beat-type" onChange={changeBeatType} value={selected.type}>
-          {beatTypeOptions.map((option, index) => (
-            <option key={index} value={option.value}>{option.label}</option>
-          ))}
-        </select>
-        <br></br>
-        <label> Choose Note Sound </label>
-        <br></br>
-        <select className="sound" onChange={changeSoundType} value={selected.sound}>
-          {soundOptions.map((option, index) => (
-            <option key={index} value={option.value}>{option.label}</option>
-          ))}
-        </select>
+        <div className="menu-item choose-type">
+          <label> 🎶 Choose Note Type </label>
+          <br></br>
+          <select className="dropdown type" onChange={changeBeatType} value={selected.type}>
+            {beatTypeOptions.map((option, index) => (
+              <option key={index} value={option.value}>{option.label}</option>
+            ))}
+          </select>
+        </div>
+        <div className="menu-item choose-sound">
+          <label> 🔊 Choose Note Sound </label>
+          <br></br>
+          <select className="dropdown sound" onChange={changeSoundType} value={selected.sound}>
+            {soundOptions.map((option, index) => (
+              <option key={index} value={option.value}>{option.label}</option>
+            ))}
+          </select>
+        </div>
       </div>
-      <button className="btn" onClick={toggleMetronome}>
-        Start Metronome
-      </button>
-      <div className="tempo-div">
-        <button className="btn" onClick={changeBeatInterval}>
-          Change Tempo
-        </button>
-        <input
-          type="text"
-          id="tempo"
-          value={tempo}
-          onChange={changeTempo}
-        >
-        </input>
+      <div className="control-panel">
+        <div className="toggle-div">
+          <button className="btn" onClick={toggleMetronome}>
+          ⏲️ Toggle Metronome
+          </button>
+        </div>
+        <div className="tempo-div">
+          <button className="btn" onClick={changeBeatInterval}>
+          ⏳ Change Tempo
+          </button>
+          <div className="tempo-input-container">
+            <input
+              className="tempo-input"
+              type="text"
+              id="tempo"
+              value={tempo}
+              onChange={changeTempo}
+            >
+            </input>
+            <label> BPM </label>
+          </div>
+        </div>
       </div>
-    </>
+    </div>
   )
 }
 

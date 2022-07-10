@@ -10,8 +10,8 @@ const Note = ({ note, beatCount, type, playBeat, displayMenu, }) => {
     if(note.playNote !== false) playSound();
   }, [note.playNote])
   //manage styles
-  let playGradient = "linear-gradient(green, lightgreen)";
-  let defaultGradient = "linear-gradient(red, yellow)";
+  let playGradient = "linear-gradient(to bottom right, green, lightgreen)";
+  let defaultGradient = "linear-gradient(to bottom right, red, orange)";
   let styles = {backgroundImage: note.playNote !== false ? playGradient : defaultGradient}
   //manage classes
   let className = 'note';

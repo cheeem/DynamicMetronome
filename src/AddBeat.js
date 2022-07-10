@@ -5,7 +5,7 @@ const AddBeat = ({ addBeatToBar, beatsNum, }) => {
     <div className="beat" onClick={addBeatToBar} style={{display: beatsNum === 16 ? "none" : "flex"}}>
         <div className="note add">
           <p> 
-            Add a New Beat
+            +
           </p>
         </div>
     </div>
