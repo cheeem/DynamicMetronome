@@ -51,6 +51,8 @@ const App = () => {
   const [beats, setBeats] = useState(startBeats);
   //define tempo state
   let [tempo, setTempo] = useState(120);
+  //define tempo input state
+  let [tempoInput, setTempoInput] = useState('');
   //define beat interval state
   let [beatInterval, setBeatInterval] = useState(1/(tempo/60));
   //define running status state
@@ -78,26 +80,32 @@ const App = () => {
     }
     //loop back to first beat
     if(beatIndex === beats.length) beatIndex = 0;
-    //change note play status
+    //change playNote status
     setBeats(beats.map((beat, index) => {
       beat = {...beat, playNote: false}
       if (index === beatIndex) beat = {...beat, playNote: noteIndex};
       return beat;
     }));
+    //change playBeat status if the selected beat is being played
     if(selected.beatCount === beatIndex) setSelected({...selected, playBeat: true});
     setNoteIndex(noteIndex+1);
     setBeatIndex(beatIndex);
   }, isOn ? ((beatInterval/beats[beatIndex].type)*1000) : null);
 
-  const changeTempo = (e) => {
-    tempo = Number(e.target.value);
-    if(isNaN(tempo) || tempo < 1) tempo = '';
-    if(tempo > 200) tempo = 200;
-    setTempo(tempo);
+  const processTempoInput = (e) => {
+    tempoInput = Number(e.target.value);
+    //reset tempo if value is invalid or too small
+    if(isNaN(tempoInput) || tempoInput < 1) tempoInput = '';
+    //set tempo to 200 if the value is too big
+    if(tempoInput > 200) tempoInput = 200;
+    //update the tempo (visually shown in the input)
+    setTempoInput(tempoInput);
   }
 
   const changeBeatInterval = () => {
-    if(tempo) setBeatInterval(1/(tempo/60))
+    if(tempoInput) setTempo(tempoInput);
+    setTempoInput('');
+    setBeatInterval(1/(tempo/60));
   }
 
   const toggleMetronome = () => {
@@ -111,20 +119,23 @@ const App = () => {
   }
 
   const displayMenu = (event, selectedData) => {
+    //stop propagation
+    event.stopPropagation();
     //determine display type
     let display = 'block';
-    if(selected.beatCount === selectedData.beatCount && selected.noteCount === selectedData.noteCount)
+    if(selected.beatCount === selectedData?.beatCount && selected.noteCount === selectedData?.noteCount)
       menuStyle.display === 'block' ? display = 'none' : display = 'block';
+    if(selectedData === false) display = 'none';
     //unselect if menu is hidden
     if(display === 'none') selectedData = {};
     //display and position menu
-    setMenuStyle({
+    if(selectedData !== true) setMenuStyle({
       top: `${event.clientY}px`,
       left: `${event.clientX}px`,
       display: display,
     });
     //set selected beat
-    setSelected(selectedData);
+    if(selectedData !== true) setSelected(selectedData);
   }
 
   const deleteBeat = () => {
@@ -170,7 +181,7 @@ const App = () => {
   }
   
   return (
-    <div className='app-container'> 
+    <div className='app-container' onClick={(event) => displayMenu(event, false)}> 
       <Bar 
         beats={beats}
         display={menuStyle.display}
@@ -178,7 +189,7 @@ const App = () => {
         displayMenu={displayMenu}
         addBeatToBar={addBeatToBar}
       />
-      <div className='menu' style={menuStyle}>
+      <div className='menu' style={menuStyle} onClick={(event) => displayMenu(event, true)}>
         <div className='menu-header'> Options </div>
         <div className='menu-item delete-beat'> 
           <label className='delete-label' onClick={deleteBeat}> ❌ Delete Beat </label>
@@ -217,8 +228,9 @@ const App = () => {
               className='tempo-input'
               type='text'
               id='tempo'
-              value={tempo}
-              onChange={changeTempo}
+              value={tempoInput}
+              placeholder={tempo}
+              onChange={processTempoInput}
             >
             </input>
             <label> BPM </label>

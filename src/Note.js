@@ -23,9 +23,9 @@ const Note = ({ note, beatCount, type, playBeat, display, selected, displayMenu,
   //manage display
   let noteDisplay = note.noteDisplay;
   if(note.noteDisplay === beatCount) noteDisplay = note.noteDisplay+1;
-  //show select if selected
-
-  const setDisplay = (event, beatCount, noteCount) => {
+  
+  //determine select display
+  const determineDisplay = (event, beatCount, noteCount) => {
     //let selectedDisplay = display === 'none' ? 'none' : 'block';
     // console.log(display);
     // console.log(selected.beatCount === beatCount && selected.noteCount === noteCount);
@@ -43,7 +43,7 @@ const Note = ({ note, beatCount, type, playBeat, display, selected, displayMenu,
         onMouseLeave={() => setHover(false)} 
         onClick={(event) => {
           displayMenu(event, {beatCount, type, sound, setSound, noteCount: note.noteCount, playBeat});
-          setDisplay(event, beatCount, note.noteCount);
+          determineDisplay(event, beatCount, note.noteCount);
         }}
       >
         <p> 
@@ -62,7 +62,7 @@ const Note = ({ note, beatCount, type, playBeat, display, selected, displayMenu,
         }}
         onClick={(event) => {
           displayMenu(event, {beatCount, type, sound, setSound, noteCount: note.noteCount, playBeat});
-          setDisplay(event, beatCount, note.noteCount);
+          determineDisplay(event, beatCount, note.noteCount);
         }}
       >
       </div>
