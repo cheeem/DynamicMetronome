@@ -1,0 +1,178 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+:root {
+    --gradient: linear-gradient(to bottom right, red, orange);
+    --gradient-hover: linear-gradient(to bottom right, orangered, yellow);
+    --shadow: 0px max(3px, 0.3vw) max(15px, 1.5vw) rgba(0,0,0,0.2);
+    --huge-font: max(40px, 4vw);
+    --big-font: max(20px, 2vw);
+    --small-font: max(16px, 1.6vw);
+    --smaller-font: max(12px, 1.2vw);
+}
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    padding: max(40px, 4vw);
+}
+
+.menu {
+    position: absolute;
+
+    padding: max(15px, 1.5vw) max(20px, 2vw);
+
+    background-image: var(--gradient);
+    font-size: var(--smaller-font);
+    font-weight: 500;
+    white-space: nowrap;
+    color: white;
+    border-radius: max(15px, 1.5vw);
+}
+
+.menu-header {
+    font-size: var(--small-font);
+    font-weight: 1000;
+    border-bottom: max(2px, 0.2vw) solid white;
+}
+
+.menu-item {
+    margin-top: max(10px, 1vw);
+    padding: max(2px, 0.2vw);
+    border-radius: 4px;
+}
+
+.dropdown {
+    margin-top: max(5px, 0.5vw);
+}
+
+input, select {
+    padding: max(2px, 0.2vw) max(7.5px, 0.75vw);
+
+    width: max(140px, 14vw);
+
+    font-size: var(--smaller-font);
+    border-radius: max(10px, 1vw);
+    border: none;
+    box-shadow: var(--shadow);
+}
+
+input {
+    width: max(50px, 5vw);
+
+    text-align: center;
+}
+
+.btn {
+    margin: max(10px, 1vw);
+    padding: max(5px, 0.5vw) max(20px, 2vw);
+
+    height: max(40px, 4vw);
+    width: max(250px, 25vw);
+
+    background-image: var(--gradient);
+    text-align: left;
+    font-size: var(--small-font);
+    font-weight: 1000;
+    color: white;
+    border-radius: 1000px;
+    border: none;
+    box-shadow: var(--shadow);
+}
+
+.btn:hover, .delete-beat:hover {
+    background-image: var(--gradient-hover);
+    transition: 500ms;
+}
+
+.tempo-div {
+    display: flex;
+    align-items: center;
+}
+
+@media screen and (max-width: 460px) {
+    .tempo-div {
+      flex-wrap: wrap;
+    }
+    .tempo-input-container {
+        margin: max(10px, 1vw);
+    }
+  }
+
+.tempo-input-container {
+    display: flex;
+    align-items: center;
+    gap: max(10px, 1vw);
+
+    padding: max(5px, 0.5vw) max(20px, 2vw);
+
+    height: max(40px, 4vw);
+
+    background-image: var(--gradient);
+    font-size: var(--small-font);
+    font-weight: 1000;
+    color: white;
+    border-radius: 1000px;
+    box-shadow: var(--shadow);
+}
+
+.bar {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap; 
+}
+
+.beat {
+    padding: max(10px, 1vw);
+
+    display: flex; 
+    align-items: center; 
+    flex-wrap: nowrap;
+}
+
+.note {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+    margin: max(5px, 0.5vw);
+    padding: max(5px, 0.5vw);
+
+    height: max(150px, 15vw);
+    width: max(50px, 5vw);
+
+    color: white;
+    text-align: center;
+    font-size: var(--small-font);
+    font-weight: 1000;
+    border-radius: 30% 70% / 10%;
+    box-shadow: var(--shadow);
+}
+
+.note.first {
+    height: max(200px, 20vw);
+
+    font-size: var(--big-font);
+}
+
+.note.add {
+    height: max(200px, 20vw);
+
+    background-color: transparent;
+    font-size: var(--huge-font);
+    color: rgba(79, 200, 31, 1); 
+    text-shadow: max(1px, 0.2vw) max(1px, 0.2vw) rgba(0,0,0,1);
+    border: max(2px, 0.2vw) solid rgba(0,0,0,1);
+    box-shadow: inset 0px max(2px, 0.3vw) max(15px, 1.5vw) rgba(0,0,0,0.2), 0px max(2px, 0.3vw) max(15px, 1.5vw) rgba(0,0,0,0.2);
+}
+
+.note.add:hover {
+    background-color:rgba(79, 200, 31, 0.1);
+}
