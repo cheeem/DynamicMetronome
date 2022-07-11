@@ -96,6 +96,8 @@ input {
     box-shadow: var(--shadow);
 }
 
+
+
 .tempo-div {
     display: flex;
     align-items: center;
@@ -173,7 +175,7 @@ input {
     background-color: transparent;
     font-size: var(--huge-font);
     color: rgba(79, 200, 31, 1); 
-    text-shadow: max(1px, 0.2vw) max(1px, 0.2vw) rgba(0,0,0,1);
+    text-shadow: 0px max(5px, 0.5vw) max(15px, 1.5vw) rgba(0,0,0,0.7);
     border: max(2px, 0.2vw) solid rgba(0,0,0,1);
     box-shadow: inset 0px max(2px, 0.3vw) max(15px, 1.5vw) rgba(0,0,0,0.2), 0px max(2px, 0.3vw) max(15px, 1.5vw) rgba(0,0,0,0.2);
 }

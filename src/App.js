@@ -32,6 +32,7 @@ const App = () => {
     {value: 4, label: 'Sixteenth Note'}
   ]
   const soundOptions = [
+    {value: '', label: 'No Sound'},
     {value: click, label: 'Click'},
     {value: woodblock, label: 'Woodblock'},
     {value: tap, label: 'Tap'},
@@ -181,7 +182,6 @@ const App = () => {
         <div className='menu-header'> Options </div>
         <div className='menu-item delete-beat'> 
           <label className='delete-label' onClick={deleteBeat}> ❌ Delete Beat </label>
-          <div className='delte-icon' src=''> </div>
         </div>
         <div className='menu-item choose-type'>
           <label> 🎶 Choose Note Type </label>
@@ -205,7 +205,7 @@ const App = () => {
       <div className='control-panel'>
         <div className='toggle-div'>
           <button className='btn' onClick={toggleMetronome}>
-            ⏲️ Toggle Metronome
+            ⏲️ {!isOn ? "Start" : "Stop"} Metronome
           </button>
         </div>
         <div className='tempo-div'>

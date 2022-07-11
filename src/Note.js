@@ -7,14 +7,14 @@ const Note = ({ note, beatCount, type, playBeat, display, selected, displayMenu,
   let [sound, setSound] = useState(click);
   let [playSound] = useSound(sound);
   useEffect(() => {
-    if(note.playNote !== false) playSound();
-  }, [note.playNote])
+    if(sound && note.playNote !== false) playSound();
+  }, [note.playNote]);
   //define hover state 
   const [hover, setHover] = useState(false);
   //select display state
   let [selectedDisplay, setSelectedDisplay] = useState('none');
   //determine gradient
-  let noteGradient = determineGradient(note.playNote, hover, false);
+  let noteGradient = determineGradient(note.playNote, hover, sound);
   //define note styles
   let styles = {backgroundImage: noteGradient}
   //manage classes
@@ -70,15 +70,16 @@ const Note = ({ note, beatCount, type, playBeat, display, selected, displayMenu,
   )
 }
 
-const determineGradient = (playNote, hover, noSound) => {
+const determineGradient = (playNote, hover, sound) => {
   //define gradients
   let defaultGradient = 'linear-gradient(to bottom right, red, orange)';
   let defaultHoverGradient = 'linear-gradient(to bottom right, orangered, yellow)';
   let playGradient = 'linear-gradient(to bottom right, green, lightgreen)';
   let playHoverGradient= 'linear-gradient(to bottom right, lightgreen, lightblue)';
-  let noSoundGradient = 'linear-gradient(to bottom right, lightgrey, dimgrey)';
+  let noSoundGradient = 'linear-gradient(to bottom right, grey, darkgrey)';
+  let noSoundHoverGradient = 'linear-gradient(to bottom right, lightgrey, darkgrey)';
   //determine note gradient
-  if(noSound) return noSoundGradient;
+  if(!sound) return !hover ? noSoundGradient : noSoundHoverGradient;
   if(playNote === false) return !hover ? defaultGradient : defaultHoverGradient;
   return !hover ? playGradient : playHoverGradient;
 }
