@@ -1,8 +1,19 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 import Bar from './Bar.js';
-import mn1 from './sounds/mn1.mp3';
-import mn2 from './sounds/mn2.mp3';
+import click from './sounds/click.mp3';
+import woodblock from './sounds/woodblock.mp3';
+import tap from './sounds/tap.wav';
+import bass1 from './sounds/bass1.wav';
+import bass2 from './sounds/bass2.wav';
+import bass3 from './sounds/bass3.wav'
+import snare1 from './sounds/snare1.wav';
+import snare2 from './sounds/snare2.wav';
+import snare3 from './sounds/snare3.wav';
+import tom from './sounds/tom.wav';
+import ride from './sounds/ride.wav';
+import crash from './sounds/crash.wav';
+
 
 const App = () => {
   //create starting beats
@@ -21,8 +32,18 @@ const App = () => {
     {value: 4, label: 'Sixteenth Note'}
   ]
   const soundOptions = [
-    {value: mn1, label: 'Metronome 1'},
-    {value: mn2, label: 'Metronome 2'},
+    {value: click, label: 'Click'},
+    {value: woodblock, label: 'Woodblock'},
+    {value: tap, label: 'Tap'},
+    {value: snare1, label: 'Snare Drum 1'},
+    {value: snare2, label: 'Snare Drum 2'},
+    {value: snare3, label: 'Snare Drum 3'},
+    {value: bass1, label: 'Bass Drum 1'},
+    {value: bass2, label: 'Bass Drum 2'},
+    {value: bass3, label: 'Bass Drum 3'},
+    {value: tom, label: 'Tom Drum'},
+    {value: ride, label: 'Ride Cymbal'},
+    {value: crash, label: 'Crash Cymbal'},
   ]
 
   //define beat state

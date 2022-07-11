@@ -2,7 +2,7 @@
     margin: 0px;
     padding: 0px;
     box-sizing: border-box;
-    font-family: sans-serif;
+    font-family: 'Poppins';
 }
 
 :root {
@@ -28,9 +28,9 @@
 
     padding: max(15px, 1.5vw) max(20px, 2vw);
 
-    background-image: var(--gradient);
+    background: var(--gradient);
     font-size: var(--smaller-font);
-    font-weight: 500;
+    font-weight: 600;
     white-space: nowrap;
     color: white;
     border-radius: max(15px, 1.5vw);
@@ -38,7 +38,7 @@
 
 .menu-header {
     font-size: var(--small-font);
-    font-weight: 1000;
+    font-weight: 800;
     border-bottom: max(2px, 0.2vw) solid white;
 }
 
@@ -69,6 +69,16 @@ input {
     text-align: center;
 }
 
+.delete-beat {
+    background: white;
+    color: black;
+}
+
+.btn:hover, .delete-beat:hover {
+    background-image: var(--gradient-hover);
+    color: white;
+}
+
 .btn {
     margin: max(10px, 1vw);
     padding: max(5px, 0.5vw) max(20px, 2vw);
@@ -76,19 +86,14 @@ input {
     height: max(40px, 4vw);
     width: max(250px, 25vw);
 
-    background-image: var(--gradient);
+    background: var(--gradient);
     text-align: left;
     font-size: var(--small-font);
-    font-weight: 1000;
+    font-weight: 800;
     color: white;
     border-radius: 1000px;
     border: none;
     box-shadow: var(--shadow);
-}
-
-.btn:hover, .delete-beat:hover {
-    background-image: var(--gradient-hover);
-    transition: 500ms;
 }
 
 .tempo-div {
@@ -114,9 +119,9 @@ input {
 
     height: max(40px, 4vw);
 
-    background-image: var(--gradient);
+    background: var(--gradient);
     font-size: var(--small-font);
-    font-weight: 1000;
+    font-weight: 800;
     color: white;
     border-radius: 1000px;
     box-shadow: var(--shadow);
@@ -151,7 +156,7 @@ input {
     color: white;
     text-align: center;
     font-size: var(--small-font);
-    font-weight: 1000;
+    font-weight: 800;
     border-radius: 30% 70% / 10%;
     box-shadow: var(--shadow);
 }

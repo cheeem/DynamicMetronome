@@ -1,10 +1,10 @@
 import {React, useEffect, useState} from 'react';
 import useSound from 'use-sound';
-import mn1 from './sounds/mn1.mp3';
+import click from './sounds/click.mp3';
 
 const Note = ({ note, beatCount, type, playBeat, display, selected, displayMenu, }) => {
   //manage sound
-  let [sound, setSound] = useState(mn1);
+  let [sound, setSound] = useState(click);
   let [playSound] = useSound(sound);
   useEffect(() => {
     if(note.playNote !== false) playSound();
