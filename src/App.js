@@ -100,10 +100,10 @@ const App = () => {
     if(tempoInput > 200) tempoInput = 200;
     //update the tempo (visually shown in the input)
     setTempoInput(tempoInput);
+    if(tempoInput) setTempo(tempoInput);
   }
 
   const changeBeatInterval = () => {
-    if(tempoInput) setTempo(tempoInput);
     setTempoInput('');
     setBeatInterval(1/(tempo/60));
   }
