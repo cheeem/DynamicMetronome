@@ -2,7 +2,7 @@ import React from 'react';
 import Beat from './Beat.js';
 import AddBeat from './AddBeat.js'
 
-const Bar = ({beats, displayMenu, addBeatToBar, }) => {
+const Bar = ({beats, display, selected, displayMenu, addBeatToBar, }) => {
   return (
     <>
       <div className='bar'>
@@ -11,6 +11,8 @@ const Bar = ({beats, displayMenu, addBeatToBar, }) => {
             return <Beat
               key={index}
               beat={beat}
+              display={display}
+              selected={selected}
               displayMenu={displayMenu}
             />
         })}

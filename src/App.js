@@ -15,15 +15,14 @@ const App = () => {
   }
   //create menu dropdown options
   const beatTypeOptions = [
-    {value: 1, label: "Quarter Note"},
-    {value: 2, label: "Eighth Note"},
-    {value: 3, label: "Triplelet"},
-    {value: 4, label: "Sixteenth Note"}
+    {value: 1, label: 'Quarter Note'},
+    {value: 2, label: 'Eighth Note'},
+    {value: 3, label: 'Triplelet'},
+    {value: 4, label: 'Sixteenth Note'}
   ]
   const soundOptions = [
-    {value: mn1, label: "Metronome 1"},
-    {value: mn2, label: "Metronome 2"},
-
+    {value: mn1, label: 'Metronome 1'},
+    {value: mn2, label: 'Metronome 2'},
   ]
 
   //define beat state
@@ -39,10 +38,10 @@ const App = () => {
   //define note index state
   let [noteIndex, setNoteIndex] = useState(0);
   //define menu styles state
-  let [menuStyle, setMenuStyle] = useState({display: "none", top: 0, left: 0});
+  let [menuStyle, setMenuStyle] = useState({display: 'none', top: 0, left: 0});
   //define current selected beat state
   const [selected, setSelected] = useState({});
-
+  
   const addBeatToBar = () => {
     if(beats.length === 16) return;
     let newBeat = {playNote: false, type: 1,}
@@ -63,6 +62,7 @@ const App = () => {
       if (index === beatIndex) beat = {...beat, playNote: noteIndex};
       return beat;
     }));
+    if(selected.beatCount === beatIndex) setSelected({...selected, playBeat: true});
     setNoteIndex(noteIndex+1);
     setBeatIndex(beatIndex);
   }, isOn ? ((beatInterval/beats[beatIndex].type)*1000) : null);
@@ -91,8 +91,10 @@ const App = () => {
   const displayMenu = (event, selectedData) => {
     //determine display type
     let display = 'block';
-    if(selected.noteCount === selectedData.noteCount)
-      menuStyle.display === "block" ? display = "none" : display = "block";
+    if(selected.beatCount === selectedData.beatCount && selected.noteCount === selectedData.noteCount)
+      menuStyle.display === 'block' ? display = 'none' : display = 'block';
+    //unselect if menu is hidden
+    if(display === 'none') selectedData = {};
     //display and position menu
     setMenuStyle({
       top: `${event.clientY}px`,
@@ -106,17 +108,19 @@ const App = () => {
   const deleteBeat = () => {
     //turn off metronome if running and if all beats will be deleted
     if(isOn && beats.length-1 === 0) toggleMetronome();
-    //delete beat
-    setBeats(beats.filter((beat, index) => index !== selected.beatCount));
-    //set beat index
-    if(beatIndex) beatIndex--;
-    setBeatIndex(beatIndex);
     //reset note index 
     if(selected.playBeat) setNoteIndex(0);
+    //delete beat
+    setBeats(beats.filter((beat, index) => index !== selected.beatCount));
+    //set back beat index if its the last one
+    if(beats.length-1 === beatIndex) beatIndex--;
+    setBeatIndex(beatIndex);
+    //unselect note
+    setSelected({});
     //hide menu
     setMenuStyle({
       ...menuStyle,
-      display: "none",
+      display: 'none',
     });
   }
 
@@ -144,52 +148,54 @@ const App = () => {
   }
   
   return (
-    <div className="app-container"> 
+    <div className='app-container'> 
       <Bar 
         beats={beats}
+        display={menuStyle.display}
+        selected={selected}
         displayMenu={displayMenu}
         addBeatToBar={addBeatToBar}
       />
-      <div className="menu" style={menuStyle}>
-        <div className="menu-header"> Options </div>
-        <div className="menu-item delete-beat"> 
-          <label className="delete-label" onClick={deleteBeat}> ❌ Delete Beat </label>
-          <div className="delte-icon" src=""> </div>
+      <div className='menu' style={menuStyle}>
+        <div className='menu-header'> Options </div>
+        <div className='menu-item delete-beat'> 
+          <label className='delete-label' onClick={deleteBeat}> ❌ Delete Beat </label>
+          <div className='delte-icon' src=''> </div>
         </div>
-        <div className="menu-item choose-type">
+        <div className='menu-item choose-type'>
           <label> 🎶 Choose Note Type </label>
           <br></br>
-          <select className="dropdown type" onChange={changeBeatType} value={selected.type}>
+          <select className='dropdown type' onChange={changeBeatType} value={selected.type}>
             {beatTypeOptions.map((option, index) => (
               <option key={index} value={option.value}>{option.label}</option>
             ))}
           </select>
         </div>
-        <div className="menu-item choose-sound">
+        <div className='menu-item choose-sound'>
           <label> 🔊 Choose Note Sound </label>
           <br></br>
-          <select className="dropdown sound" onChange={changeSoundType} value={selected.sound}>
+          <select className='dropdown sound' onChange={changeSoundType} value={selected.sound}>
             {soundOptions.map((option, index) => (
               <option key={index} value={option.value}>{option.label}</option>
             ))}
           </select>
         </div>
       </div>
-      <div className="control-panel">
-        <div className="toggle-div">
-          <button className="btn" onClick={toggleMetronome}>
-          ⏲️ Toggle Metronome
+      <div className='control-panel'>
+        <div className='toggle-div'>
+          <button className='btn' onClick={toggleMetronome}>
+            ⏲️ Toggle Metronome
           </button>
         </div>
-        <div className="tempo-div">
-          <button className="btn" onClick={changeBeatInterval}>
-          ⏳ Change Tempo
+        <div className='tempo-div'>
+          <button className='btn' onClick={changeBeatInterval}>
+            ⏳ Change Tempo
           </button>
-          <div className="tempo-input-container">
+          <div className='tempo-input-container'>
             <input
-              className="tempo-input"
-              type="text"
-              id="tempo"
+              className='tempo-input'
+              type='text'
+              id='tempo'
               value={tempo}
               onChange={changeTempo}
             >

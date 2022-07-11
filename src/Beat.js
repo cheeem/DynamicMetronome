@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Note from './Note.js';
 
-const Beat = ({ beat, displayMenu, }) => {
+const Beat = ({ beat, display, selected, displayMenu, }) => {
   const noteDisplays = identifyNoteDisplays(beat.type, beat.beatCount);
   const notes = createNotes(beat.type, noteDisplays, beat.playNote);
   return (
@@ -14,6 +14,8 @@ const Beat = ({ beat, displayMenu, }) => {
             beatCount={beat.beatCount}
             type={beat.type}
             playBeat={beat.playNote !== false}
+            display={display}
+            selected={selected}
             displayMenu={displayMenu}
             />
         })}
@@ -36,9 +38,9 @@ const createNotes = (type, noteDisplays, playNote) => {
 
 const identifyNoteDisplays = (type, beatCount) => {
   if(type === 1) return [beatCount];
-  if(type === 2) return [beatCount, "&"];
-  if(type === 3) return [beatCount, "trip", "let"];
-  if(type === 4) return [beatCount, "e", "&", "ah"];
+  if(type === 2) return [beatCount, '&'];
+  if(type === 3) return [beatCount, 'trip', 'let'];
+  if(type === 4) return [beatCount, 'e', '&', 'ah'];
   return [];
 }
 
