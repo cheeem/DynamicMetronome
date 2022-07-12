@@ -1,20 +1,20 @@
 import {React, useEffect, useState} from 'react';
 import useSound from 'use-sound';
-import click from './sounds/click.mp3';
+import woodblock1 from './sounds/woodblock1.mp3';
 
 const Note = ({ note, beatCount, type, playBeat, display, selected, displayMenu, }) => {
   //manage sound
-  let [sound, setSound] = useState(click);
-  let [playSound] = useSound(sound);
+  let [sound, setSound] = useState({play: woodblock1, emoji: '🧱'});
+  let [playSound] = useSound(sound.play);
   useEffect(() => {
-    if(sound && note.playNote !== false) playSound();
+    if(sound.play && note.playNote !== false) playSound();
   }, [note.playNote]);
   //define hover state 
   const [hover, setHover] = useState(false);
   //select display state
   let [selectedDisplay, setSelectedDisplay] = useState('none');
   //determine gradient
-  let noteGradient = determineGradient(note.playNote, hover, sound);
+  let noteGradient = determineGradient(note.playNote, hover, sound.play);
   //define note styles
   let styles = {backgroundImage: noteGradient}
   //manage classes
@@ -48,6 +48,9 @@ const Note = ({ note, beatCount, type, playBeat, display, selected, displayMenu,
       >
         <p> 
           {noteDisplay}
+        </p>
+        <p> 
+          {sound.emoji}
         </p>
       </div>
       <div

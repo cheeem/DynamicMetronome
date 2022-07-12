@@ -40,12 +40,13 @@
     font-size: var(--small-font);
     font-weight: 800;
     border-bottom: max(2px, 0.2vw) solid white;
+    margin-bottom: max(10px, 1vw);
 }
 
 .menu-item {
-    margin-top: max(10px, 1vw);
-    padding: max(2px, 0.2vw);
-    border-radius: 4px;
+    margin-top: max(5px, 0.5vw);
+    border-radius: max(4px, 0.4vw);
+    margin-bottom: max(5px, 0.5vw);
 }
 
 .dropdown {
@@ -53,23 +54,28 @@
 }
 
 input, select {
-    padding: max(2px, 0.2vw) max(7.5px, 0.75vw);
+    padding: max(2px, 0.2vw);
 
-    width: max(140px, 14vw);
+    width: calc(100%);
 
     font-size: var(--smaller-font);
-    border-radius: max(10px, 1vw);
+    font-weight: 600;
+    border-radius: max(4px, 0.4vw);
     border: none;
     box-shadow: var(--shadow);
 }
 
 input {
+    padding: max(2px, 0.2vw) max(7.5px, 0.75vw);
+
     width: max(50px, 5vw);
 
     text-align: center;
 }
 
 .delete-beat {
+    padding: max(2px, 0.2vw);
+
     background: white;
     color: black;
 }
@@ -143,6 +149,7 @@ input {
 
 .note {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     position: relative;
@@ -163,7 +170,7 @@ input {
 
 .note.first {
     height: max(200px, 20vw);
-
+    /* gap: 10px; */
     font-size: var(--big-font);
 }
 

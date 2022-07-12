@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 import Bar from './Bar.js';
-import click from './sounds/click.mp3';
-import woodblock from './sounds/woodblock.mp3';
-import tap from './sounds/tap.wav';
+import woodblock1 from './sounds/woodblock1.mp3';
+import woodblock2 from './sounds/woodblock2.mp3';
+import tap1 from './sounds/tap1.wav';
+import tap2 from './sounds/tap2.wav';
+import snare1 from './sounds/snare1.wav';
+import snare2 from './sounds/snare2.wav';
 import bass1 from './sounds/bass1.wav';
 import bass2 from './sounds/bass2.wav';
 import bass3 from './sounds/bass3.wav'
-import snare1 from './sounds/snare1.wav';
-import snare2 from './sounds/snare2.wav';
-import snare3 from './sounds/snare3.wav';
 import tom from './sounds/tom.wav';
 import ride from './sounds/ride.wav';
 import crash from './sounds/crash.wav';
@@ -32,19 +32,19 @@ const App = () => {
     {value: 4, label: '4️⃣ Sixteenth Note'}
   ]
   const soundOptions = [
-    {value: '', label: 'No Sound'},
-    {value: click, label: 'Click'},
-    {value: woodblock, label: 'Woodblock'},
-    {value: tap, label: 'Tap'},
-    {value: snare1, label: 'Snare Drum 1'},
-    {value: snare2, label: 'Snare Drum 2'},
-    {value: snare3, label: 'Snare Drum 3'},
-    {value: bass1, label: 'Bass Drum 1'},
-    {value: bass2, label: 'Bass Drum 2'},
-    {value: bass3, label: 'Bass Drum 3'},
-    {value: tom, label: 'Tom Drum'},
-    {value: ride, label: 'Ride Cymbal'},
-    {value: crash, label: 'Crash Cymbal'},
+    {value: woodblock1, label: '🧱 Woodblock 1', emoji: '🧱'},
+    {value: woodblock2, label: '🧱 Woodblock 2', emoji: '🧱'},
+    {value: '', label: '🔇 No Sound', emoji: '🔇'},
+    {value: tap1, label: '🥢 Tap 1', emoji: '🥢'},
+    {value: tap2, label: '🥢 Tap 2', emoji: '🥢'},
+    {value: snare1, label: '🥁 Snare Drum 1', emoji: '🥁'},
+    {value: snare2, label: '🥁 Snare Drum 2', emoji: '🥁'},
+    {value: bass1, label: '👟 Kick Drum 1', emoji: '👟'},
+    {value: bass2, label: '👟 Kick Drum 2', emoji: '👟'},
+    {value: bass3, label: '👟 Kick Drum 3', emoji: '👟'},
+    {value: tom, label: '🛢️ Tom Drum', emoji: '🛢️'},
+    {value: ride, label: '📀 Ride Cymbal', emoji: '📀'},
+    {value: crash, label: '📀 Crash Cymbal', emoji: '📀'},
   ]
 
   //define beat state
@@ -169,7 +169,7 @@ const App = () => {
   }
 
   const changeBeatType = (event) => {
-    //get selected dropdown option (number)
+    //get selected dropdown beat type (number)
     let input = Number(event.target.value);
     //reset note index
     if(selected.playBeat) {
@@ -187,14 +187,17 @@ const App = () => {
   }
 
   const changeSoundType = (event) => {
-    //get selected dropdown option (number)
+    //get selected dropdown sound
     let input = event.target.value;
+    //get selected dropdown emoji
+    console.log(soundOptions.filter(option => option.value === input));
+    let emoji = soundOptions.filter(option => option.value === input)[0].emoji;
     //define function to set state
     let setSound = selected.setSound;
     //update selected sound
-    setSelected({...selected, sound: input});
+    setSelected({...selected, sound: {play: input, emoji}});
     //update sound state
-    setSound(input);
+    setSound({play: input, emoji});
   }
   
   return (
@@ -223,9 +226,9 @@ const App = () => {
         <div className='menu-item choose-sound'>
           <label> 🔊 Choose Note Sound </label>
           <br></br>
-          <select className='dropdown sound' onChange={changeSoundType} value={selected.sound}>
+          <select className='dropdown sound' onChange={changeSoundType} value={selected.sound?.play}>
             {soundOptions.map((option, index) => (
-              <option key={index} value={option.value}>{option.label}</option>
+              <option key={index} value={option.value}> {option.label}</option>
             ))}
           </select>
         </div>
