@@ -190,7 +190,6 @@ const App = () => {
     //get selected dropdown sound
     let input = event.target.value;
     //get selected dropdown emoji
-    console.log(soundOptions.filter(option => option.value === input));
     let emoji = soundOptions.filter(option => option.value === input)[0].emoji;
     //define function to set state
     let setSound = selected.setSound;
