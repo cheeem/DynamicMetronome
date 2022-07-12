@@ -26,10 +26,10 @@ const App = () => {
   }
   //create menu dropdown options
   const beatTypeOptions = [
-    {value: 1, label: 'Quarter Note'},
-    {value: 2, label: 'Eighth Note'},
-    {value: 3, label: 'Triplelet'},
-    {value: 4, label: 'Sixteenth Note'}
+    {value: 1, label: '1️⃣ Quarter Note'},
+    {value: 2, label: '2️⃣ Eighth Note'},
+    {value: 3, label: '3️⃣ Triplelet'},
+    {value: 4, label: '4️⃣ Sixteenth Note'}
   ]
   const soundOptions = [
     {value: '', label: 'No Sound'},
@@ -53,6 +53,10 @@ const App = () => {
   let [tempo, setTempo] = useState(120);
   //define tempo input state
   let [tempoInput, setTempoInput] = useState('');
+  //define tempo button background state
+  const [tempoBackground, setTempoBackground] = useState('dimgrey, darkgrey');
+  //define tempo button hover state
+  const [tempoHover, setTempoHover] = useState(false);
   //define beat interval state
   let [beatInterval, setBeatInterval] = useState(1/(tempo/60));
   //define running status state
@@ -97,16 +101,23 @@ const App = () => {
     //reset tempo if value is invalid or too small
     if(isNaN(tempoInput) || tempoInput < 1) tempoInput = '';
     //set tempo to 200 if the value is too big
-    if(tempoInput > 200) tempoInput = 200;
+    if(tempoInput > 400) tempoInput = 400;
     //update the tempo (visually shown in the input)
     setTempoInput(tempoInput);
     if(tempoInput) setTempo(tempoInput);
+    if(tempoInput) setTempoBackground('red, orange');
   }
 
   const changeBeatInterval = () => {
     setTempoInput('');
+    setTempoBackground('dimgrey, darkgrey');
     setBeatInterval(1/(tempo/60));
   }
+
+  useEffect(() => {
+    if(tempoBackground === 'red, orange')
+      setTempoBackground(() => !tempoHover ? 'red, orange' : 'orangered, yellow')
+  }, [tempoHover]);
 
   const toggleMetronome = () => {
     //revert index back to 1
@@ -160,6 +171,12 @@ const App = () => {
   const changeBeatType = (event) => {
     //get selected dropdown option (number)
     let input = Number(event.target.value);
+    //reset note index
+    if(selected.playBeat) {
+      if(selected.type > input) beatIndex = beats.length-1 === beatIndex ? 0 : beatIndex++;
+      setBeatIndex(beatIndex);
+      setNoteIndex(0);
+    }
     //update selected type
     setSelected({...selected, type: input});
     //update beat type
@@ -220,7 +237,13 @@ const App = () => {
           </button>
         </div>
         <div className='tempo-div'>
-          <button className='btn' onClick={changeBeatInterval}>
+          <button
+            className='btn'
+            onClick={changeBeatInterval} 
+            onMouseEnter={() => setTempoHover(true)}
+            onMouseLeave={() => setTempoHover(false)} 
+            style={{backgroundImage: `linear-gradient(to bottom right, ${tempoBackground})`}}
+          >
             ⏳ Change Tempo
           </button>
           <div className='tempo-input-container'>

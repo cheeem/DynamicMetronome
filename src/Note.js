@@ -76,8 +76,8 @@ const determineGradient = (playNote, hover, sound) => {
   let defaultHoverGradient = 'linear-gradient(to bottom right, orangered, yellow)';
   let playGradient = 'linear-gradient(to bottom right, green, lightgreen)';
   let playHoverGradient= 'linear-gradient(to bottom right, lightgreen, lightblue)';
-  let noSoundGradient = 'linear-gradient(to bottom right, grey, darkgrey)';
-  let noSoundHoverGradient = 'linear-gradient(to bottom right, lightgrey, darkgrey)';
+  let noSoundGradient = 'linear-gradient(to bottom right, dimgrey, darkgrey)';
+  let noSoundHoverGradient = 'linear-gradient(to bottom right, dimgrey, lightgray)';
   //determine note gradient
   if(!sound) return !hover ? noSoundGradient : noSoundHoverGradient;
   if(playNote === false) return !hover ? defaultGradient : defaultHoverGradient;
