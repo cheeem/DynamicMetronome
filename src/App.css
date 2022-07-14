@@ -78,6 +78,8 @@ input {
 
     background: white;
     color: black;
+
+    cursor: pointer;
 }
 
 .btn:hover, .delete-beat:hover {
@@ -100,6 +102,8 @@ input {
     border-radius: 1000px;
     border: none;
     box-shadow: var(--shadow);
+
+    cursor: pointer;
 }
 
 .tempo-div {
@@ -166,6 +170,8 @@ input {
     font-weight: 800;
     border-radius: 30% 70% / 10%;
     box-shadow: var(--shadow);
+
+    cursor: pointer;
 }
 
 .note.first {

@@ -14,39 +14,40 @@ import tom from './sounds/tom.wav';
 import ride from './sounds/ride.wav';
 import crash from './sounds/crash.wav';
 
+//determine woodblock emoji
+const woodblockEmoji = onMobile() ? '🪵' : '🧱';
+//create starting beats
+const startBeats = [];
+for(let i = 0; i < 4; i++) {
+  startBeats.push({
+    playNote: false,
+    type: 1,
+  })
+}
+//create menu dropdown options
+const beatTypeOptions = [
+  {value: 1, label: '1️⃣ Quarter Note'},
+  {value: 2, label: '2️⃣ Eighth Note'},
+  {value: 3, label: '3️⃣ Triplelet'},
+  {value: 4, label: '4️⃣ Sixteenth Note'}
+];
+const soundOptions = [
+  {value: woodblock1, label: `${woodblockEmoji} Woodblock 1`, emoji: woodblockEmoji},
+  {value: woodblock2, label: `${woodblockEmoji} Woodblock 2`, emoji: woodblockEmoji},
+  {value: '', label: '🔇 No Sound', emoji: '🔇'},
+  {value: tap1, label: '🥢 Tap 1', emoji: '🥢'},
+  {value: tap2, label: '🥢 Tap 2', emoji: '🥢'},
+  {value: snare1, label: '🥁 Snare Drum 1', emoji: '🥁'},
+  {value: snare2, label: '🥁 Snare Drum 2', emoji: '🥁'},
+  {value: bass1, label: '👟 Kick Drum 1', emoji: '👟'},
+  {value: bass2, label: '👟 Kick Drum 2', emoji: '👟'},
+  {value: bass3, label: '👟 Kick Drum 3', emoji: '👟'},
+  {value: tom, label: '🛢️ Tom Drum', emoji: '🛢️'},
+  {value: ride, label: '📀 Ride Cymbal', emoji: '📀'},
+  {value: crash, label: '📀 Crash Cymbal', emoji: '📀'},
+];
 
 const App = () => {
-  //create starting beats
-  const startBeats = [];
-  for(let i = 0; i < 4; i++) {
-    startBeats.push({
-      playNote: false,
-      type: 1,
-    })
-  }
-  //create menu dropdown options
-  const beatTypeOptions = [
-    {value: 1, label: '1️⃣ Quarter Note'},
-    {value: 2, label: '2️⃣ Eighth Note'},
-    {value: 3, label: '3️⃣ Triplelet'},
-    {value: 4, label: '4️⃣ Sixteenth Note'}
-  ]
-  const soundOptions = [
-    {value: woodblock1, label: '🧱 Woodblock 1', emoji: '🧱'},
-    {value: woodblock2, label: '🧱 Woodblock 2', emoji: '🧱'},
-    {value: '', label: '🔇 No Sound', emoji: '🔇'},
-    {value: tap1, label: '🥢 Tap 1', emoji: '🥢'},
-    {value: tap2, label: '🥢 Tap 2', emoji: '🥢'},
-    {value: snare1, label: '🥁 Snare Drum 1', emoji: '🥁'},
-    {value: snare2, label: '🥁 Snare Drum 2', emoji: '🥁'},
-    {value: bass1, label: '👟 Kick Drum 1', emoji: '👟'},
-    {value: bass2, label: '👟 Kick Drum 2', emoji: '👟'},
-    {value: bass3, label: '👟 Kick Drum 3', emoji: '👟'},
-    {value: tom, label: '🛢️ Tom Drum', emoji: '🛢️'},
-    {value: ride, label: '📀 Ride Cymbal', emoji: '📀'},
-    {value: crash, label: '📀 Crash Cymbal', emoji: '📀'},
-  ]
-
   //define beat state
   const [beats, setBeats] = useState(startBeats);
   //define tempo state
@@ -55,6 +56,8 @@ const App = () => {
   let [tempoInput, setTempoInput] = useState('');
   //define tempo button background state
   const [tempoBackground, setTempoBackground] = useState('dimgrey, darkgrey');
+  //define tempo cursor state
+  const [tempoCursor, setTempoCursor] = useState('not-allowed');
   //define tempo button hover state
   const [tempoHover, setTempoHover] = useState(false);
   //define beat interval state
@@ -106,12 +109,18 @@ const App = () => {
     setTempoInput(tempoInput);
     if(tempoInput) setTempo(tempoInput);
     if(tempoInput) setTempoBackground('red, orange');
+    if(tempoInput) setTempoCursor('pointer');
   }
 
   const changeBeatInterval = () => {
     setTempoInput('');
     setTempoBackground('dimgrey, darkgrey');
+    setTempoCursor('not-allowed')
     setBeatInterval(1/(tempo/60));
+  }
+
+  const clearTempoPlaceholder = () => {
+    setTempo('');
   }
 
   useEffect(() => {
@@ -244,7 +253,7 @@ const App = () => {
             onClick={changeBeatInterval} 
             onMouseEnter={() => setTempoHover(true)}
             onMouseLeave={() => setTempoHover(false)} 
-            style={{backgroundImage: `linear-gradient(to bottom right, ${tempoBackground})`}}
+            style={{backgroundImage: `linear-gradient(to bottom right, ${tempoBackground})`, cursor: tempoCursor}}
           >
             ⏳ Change Tempo
           </button>
@@ -256,6 +265,7 @@ const App = () => {
               value={tempoInput}
               placeholder={tempo}
               onChange={processTempoInput}
+              onClick={clearTempoPlaceholder}
             >
             </input>
             <label> BPM </label>
@@ -282,6 +292,22 @@ const useInterval = (callback, delay) => {
       return () => clearInterval(id);
     }
   }, [delay]);
+}
+
+function onMobile() {
+  const toMatch = [
+      /Android/i,
+      /webOS/i,
+      /iPhone/i,
+      /iPad/i,
+      /iPod/i,
+      /BlackBerry/i,
+      /Windows Phone/i
+  ];
+  
+  return toMatch.some((toMatchItem) => {
+      return navigator.userAgent.match(toMatchItem);
+  });
 }
 
 export default App;

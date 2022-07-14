@@ -3,8 +3,10 @@ import useSound from 'use-sound';
 import woodblock1 from './sounds/woodblock1.mp3';
 
 const Note = ({ note, beatCount, type, playBeat, display, selected, displayMenu, }) => {
+  //determine woodblock emoji
+  const woodblockEmoji = onMobile() ? '🪵' : '🧱';
   //manage sound
-  let [sound, setSound] = useState({play: woodblock1, emoji: '🧱'});
+  let [sound, setSound] = useState({play: woodblock1, emoji: woodblockEmoji});
   let [playSound] = useSound(sound.play);
   useEffect(() => {
     if(sound.play && note.playNote !== false) playSound();
@@ -23,16 +25,6 @@ const Note = ({ note, beatCount, type, playBeat, display, selected, displayMenu,
   //manage display
   let noteDisplay = note.noteDisplay;
   if(note.noteDisplay === beatCount) noteDisplay = note.noteDisplay+1;
-  
-  //determine select display
-  const determineDisplay = (event, beatCount, noteCount) => {
-    //let selectedDisplay = display === 'none' ? 'none' : 'block';
-    // console.log(display);
-    // console.log(selected.beatCount === beatCount && selected.noteCount === noteCount);
-    // if(selected.beatCount === beatCount && selected.noteCount === noteCount)
-    //   selectedDisplay = display === 'none' ? 'block' : 'none';
-    //setSelectedDisplay(selectedDisplay);
-  }
 
   return (
     <div style={{position: 'relative'}}>
@@ -41,10 +33,7 @@ const Note = ({ note, beatCount, type, playBeat, display, selected, displayMenu,
         style={styles} 
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)} 
-        onClick={(event) => {
-          displayMenu(event, {beatCount, type, sound, setSound, noteCount: note.noteCount, playBeat});
-          determineDisplay(event, beatCount, note.noteCount);
-        }}
+        onClick={(event) => displayMenu(event, {beatCount, type, sound, setSound, noteCount: note.noteCount, playBeat})}
       >
         <p> 
           {noteDisplay}
@@ -63,10 +52,7 @@ const Note = ({ note, beatCount, type, playBeat, display, selected, displayMenu,
           backgroundImage: 'linear-gradient(to bottom right, blue, lightblue)',
           opacity: 0.5,
         }}
-        onClick={(event) => {
-          displayMenu(event, {beatCount, type, sound, setSound, noteCount: note.noteCount, playBeat});
-          determineDisplay(event, beatCount, note.noteCount);
-        }}
+        onClick={(event) => displayMenu(event, {beatCount, type, sound, setSound, noteCount: note.noteCount, playBeat})}
       >
       </div>
     </div>
@@ -85,6 +71,22 @@ const determineGradient = (playNote, hover, sound) => {
   if(!sound) return !hover ? noSoundGradient : noSoundHoverGradient;
   if(playNote === false) return !hover ? defaultGradient : defaultHoverGradient;
   return !hover ? playGradient : playHoverGradient;
+}
+
+function onMobile() {
+  const toMatch = [
+      /Android/i,
+      /webOS/i,
+      /iPhone/i,
+      /iPad/i,
+      /iPod/i,
+      /BlackBerry/i,
+      /Windows Phone/i
+  ];
+  
+  return toMatch.some((toMatchItem) => {
+      return navigator.userAgent.match(toMatchItem);
+  });
 }
 
 export default Note;
