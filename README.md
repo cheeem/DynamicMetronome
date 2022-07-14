@@ -1,6 +1,6 @@
 ## Dynamic Metronome
 
-[Visit the Website](https://62cdde6af345e61155ac3fab--dynamic-metronome.netlify.app/)
+[Visit the Website](https://62d0954a3e04080c6101819d--dynamic-metronome.netlify.app/)
 
 The **Dynamic Metronome** gives the users the ability to change the **tempo**, **types of notes** and **sounds** played to create a **customized musical experience**. The layout and design of the Metronome is built around accompanying the auditory experience with a **visual** one, with an **easy-to-use**, **accessibile** model being the **focus** of the design.
 
