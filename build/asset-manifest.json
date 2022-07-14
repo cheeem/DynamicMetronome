@@ -1,27 +1,27 @@
 {
   "files": {
-    "main.css": "/static/css/main.374cf057.css",
-    "main.js": "/static/js/main.73a52481.js",
+    "main.css": "/static/css/main.851f2dc3.css",
+    "main.js": "/static/js/main.953ac433.js",
     "static/js/845.29b5da99.chunk.js": "/static/js/845.29b5da99.chunk.js",
     "static/media/bass3.wav": "/static/media/bass3.295aea1ec0197ae744d3.wav",
     "static/media/crash.wav": "/static/media/crash.15dfde6db7246caea09d.wav",
     "static/media/ride.wav": "/static/media/ride.5c5df757e75ac8a13416.wav",
     "static/media/bass2.wav": "/static/media/bass2.f728ffef4075db2edf49.wav",
-    "static/media/snare1.wav": "/static/media/snare1.78d13cda523a6d6cbef0.wav",
-    "static/media/tap.wav": "/static/media/tap.6299ac88b0a713135374.wav",
+    "static/media/tap2.wav": "/static/media/tap2.78d13cda523a6d6cbef0.wav",
+    "static/media/tap1.wav": "/static/media/tap1.6299ac88b0a713135374.wav",
     "static/media/tom.wav": "/static/media/tom.144c08410b4fca7a4df9.wav",
     "static/media/bass1.wav": "/static/media/bass1.6fd668500ce890b0d23a.wav",
-    "static/media/snare3.wav": "/static/media/snare3.88512e39eacddbba07f9.wav",
-    "static/media/snare2.wav": "/static/media/snare2.547e877abbb67328e9e1.wav",
-    "static/media/click.mp3": "/static/media/click.747b3e7632f013b6a196.mp3",
-    "static/media/woodblock.mp3": "/static/media/woodblock.fceb2370127315b5d27e.mp3",
+    "static/media/snare2.wav": "/static/media/snare2.88512e39eacddbba07f9.wav",
+    "static/media/snare1.wav": "/static/media/snare1.547e877abbb67328e9e1.wav",
+    "static/media/woodblock1.mp3": "/static/media/woodblock1.747b3e7632f013b6a196.mp3",
+    "static/media/woodblock2.mp3": "/static/media/woodblock2.fceb2370127315b5d27e.mp3",
     "index.html": "/index.html",
-    "main.374cf057.css.map": "/static/css/main.374cf057.css.map",
-    "main.73a52481.js.map": "/static/js/main.73a52481.js.map",
+    "main.851f2dc3.css.map": "/static/css/main.851f2dc3.css.map",
+    "main.953ac433.js.map": "/static/js/main.953ac433.js.map",
     "845.29b5da99.chunk.js.map": "/static/js/845.29b5da99.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.374cf057.css",
-    "static/js/main.73a52481.js"
+    "static/css/main.851f2dc3.css",
+    "static/js/main.953ac433.js"
   ]
 }
