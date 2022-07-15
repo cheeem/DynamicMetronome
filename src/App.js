@@ -209,70 +209,81 @@ const App = () => {
   }
   
   return (
-    <div className='app-container' onClick={(event) => displayMenu(event, false)}> 
-      <Bar 
-        beats={beats}
-        display={menuStyle.display}
-        selected={selected}
-        displayMenu={displayMenu}
-        addBeatToBar={addBeatToBar}
-      />
-      <div className='menu' style={menuStyle} onClick={(event) => displayMenu(event, true)}>
-        <div className='menu-header'> Options </div>
-        <div className='menu-item delete-beat'> 
-          <label className='delete-label' onClick={deleteBeat}> ❌ Delete Beat </label>
+    <>
+      <div className='nav'> 
+        <div className='header'>
+          <div className='logo-img'> </div>
+          <div className='title'> Dynamic Metronome </div> 
         </div>
-        <div className='menu-item choose-type'>
-          <label> 🎶 Choose Note Type </label>
-          <br></br>
-          <select className='dropdown type' onChange={changeBeatType} value={selected.type}>
-            {beatTypeOptions.map((option, index) => (
-              <option key={index} value={option.value}>{option.label}</option>
-            ))}
-          </select>
-        </div>
-        <div className='menu-item choose-sound'>
-          <label> 🔊 Choose Note Sound </label>
-          <br></br>
-          <select className='dropdown sound' onChange={changeSoundType} value={selected.sound?.play}>
-            {soundOptions.map((option, index) => (
-              <option key={index} value={option.value}> {option.label}</option>
-            ))}
-          </select>
-        </div>
+        <ul> 
+          <li> <a href='https://github.com/cheeem/Dynamic-Metronome' target='_blank'> GitHub </a> </li>
+        </ul>
       </div>
-      <div className='control-panel'>
-        <div className='toggle-div'>
-          <button className='btn' onClick={toggleMetronome}>
-            ⏲️ {!isOn ? "Start" : "Stop"} Metronome
-          </button>
+      <div className='app-container' onClick={(event) => displayMenu(event, false)}> 
+        <Bar 
+          beats={beats}
+          display={menuStyle.display}
+          selected={selected}
+          displayMenu={displayMenu}
+          addBeatToBar={addBeatToBar}
+        />
+        <div className='menu' style={menuStyle} onClick={(event) => displayMenu(event, true)}>
+          <div className='menu-header'> Options </div>
+          <div className='menu-item delete-beat'> 
+            <label className='delete-label' onClick={deleteBeat}> ❌ Delete Beat </label>
+          </div>
+          <div className='menu-item choose-type'>
+            <label> 🎶 Choose Note Type </label>
+            <br></br>
+            <select className='dropdown type' onChange={changeBeatType} value={selected.type}>
+              {beatTypeOptions.map((option, index) => (
+                <option key={index} value={option.value}>{option.label}</option>
+              ))}
+            </select>
+          </div>
+          <div className='menu-item choose-sound'>
+            <label> 🔊 Choose Note Sound </label>
+            <br></br>
+            <select className='dropdown sound' onChange={changeSoundType} value={selected.sound?.play}>
+              {soundOptions.map((option, index) => (
+                <option key={index} value={option.value}> {option.label}</option>
+              ))}
+            </select>
+          </div>
         </div>
-        <div className='tempo-div'>
-          <button
-            className='btn'
-            onClick={changeBeatInterval} 
-            onMouseEnter={() => setTempoHover(true)}
-            onMouseLeave={() => setTempoHover(false)} 
-            style={{backgroundImage: `linear-gradient(to bottom right, ${tempoBackground})`, cursor: tempoCursor}}
-          >
-            ⏳ Change Tempo
-          </button>
-          <div className='tempo-input-container'>
-            <input
-              className='tempo-input'
-              type='text'
-              id='tempo'
-              value={tempoInput}
-              placeholder={tempo}
-              onChange={processTempoInput}
-              onClick={clearTempoPlaceholder}
+        <div className='control-panel'>
+          <div className='toggle-div'>
+            <button className='btn toggle' onClick={toggleMetronome}>
+              ⏲️ {!isOn ? "Start" : "Stop"} Metronome
+            </button>
+          </div>
+          <div className='tempo-div'>
+            <button
+              className='btn tempo'
+              onClick={changeBeatInterval} 
+              onMouseEnter={() => setTempoHover(true)}
+              onMouseLeave={() => setTempoHover(false)} 
+              style={{backgroundImage: `linear-gradient(to bottom right, ${tempoBackground})`, cursor: tempoCursor}}
             >
-            </input>
-            <label> BPM </label>
+              ⏳ Change Tempo
+            </button>
+            <div className='tempo-input-container'>
+              <input
+                className='tempo-input'
+                type='text'
+                id='tempo'
+                value={tempoInput}
+                placeholder={tempo}
+                onChange={processTempoInput}
+                onClick={clearTempoPlaceholder}
+              >
+              </input>
+              <label> BPM </label>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 

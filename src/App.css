@@ -9,10 +9,101 @@
     --gradient: linear-gradient(to bottom right, red, orange);
     --gradient-hover: linear-gradient(to bottom right, orangered, yellow);
     --shadow: 0px max(3px, 0.3vw) max(15px, 1.5vw) rgba(0,0,0,0.2);
+    --nav-font: max(16px, 1.2vw);
     --huge-font: max(40px, 4vw);
     --big-font: max(20px, 2vw);
     --small-font: max(16px, 1.6vw);
     --smaller-font: max(12px, 1.2vw);
+}
+
+.nav {
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    position: fixed;
+
+    padding: 5px calc(max(40px, 4vw) + max(30px, 3vw));
+
+    width: 100%;
+    height: 70px;
+
+    background-color: white;
+    opacity: 0.9;
+}
+
+.header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+
+    padding: 10px 0;
+
+    height: 100%;
+}
+
+.logo-img{
+    height: 100%;
+    width: 50px;
+
+    background-image: url("./img/metronome.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.title {
+    font-size: var(--nav-font);
+    font-weight: 600;
+}
+
+.nav ul {
+    display: flex;
+    justify-content: flex-start;
+    gap: 40px;
+
+    height: 100%;
+
+    list-style: none;
+}
+
+.nav li {
+    display: inline-block;
+    position: relative;
+}
+
+.nav a {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    padding: 10px 30px;
+
+    height: 100%;
+
+    text-decoration: none;
+    color: black;
+
+    font-size: var(--nav-font);
+    font-weight: 600;
+}
+
+a:after {    
+    background: none repeat scroll 0 0 transparent;
+    bottom: 0;
+    content: "";
+    display: block;
+    height: 2px;
+    left: 50%;
+    position: absolute;
+    background: #000;
+    transition: width 0.3s ease 0s, left 0.3s ease 0s;
+    width: 0;
+}
+a:hover:after { 
+    width: 100%; 
+    left: 0; 
 }
 
 .app-container {
@@ -21,6 +112,7 @@
     align-items: flex-start;
 
     padding: max(40px, 4vw);
+    padding: max(60px, 6vw);
 }
 
 .menu {
@@ -111,7 +203,7 @@ input {
     align-items: center;
 }
 
-@media screen and (max-width: 460px) {
+@media screen and (max-width: 525px) {
     .tempo-div {
       flex-wrap: wrap;
     }
