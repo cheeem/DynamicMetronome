@@ -216,7 +216,7 @@ const App = () => {
           <div className='title'> Dynamic Metronome </div> 
         </div>
         <ul> 
-          <li> <a href='https://github.com/cheeem/Dynamic-Metronome' target='_blank'> GitHub </a> </li>
+          <li> <a href='https://github.com/cheeem/Dynamic-Metronome' target='_blank' rel="noreferrer"> GitHub </a> </li>
         </ul>
       </div>
       <div className='app-container' onClick={(event) => displayMenu(event, false)}> 
@@ -268,6 +268,10 @@ const App = () => {
               ⏳ Change Tempo
             </button>
             <div className='tempo-input-container'>
+              <form onSubmit={(event) => {
+                event.preventDefault();
+                changeBeatInterval(event);
+              }}>
               <input
                 className='tempo-input'
                 type='text'
@@ -278,6 +282,7 @@ const App = () => {
                 onClick={clearTempoPlaceholder}
               >
               </input>
+            </form>
               <label> BPM </label>
             </div>
           </div>
